@@ -19,7 +19,7 @@
 <configuration>
 <property>
  <name>mapreduce.jobtracker.address</name>
- <value>ec2-54-86-48-166.compute-1.amazonaws.com:54311</value>
+ <value>dnjplatbuild02:54311</value>
  <description>The host and port that the MapReduce job tracker runs
   at. If “local”, then jobs are run in-process as a single map
   and reduce task.

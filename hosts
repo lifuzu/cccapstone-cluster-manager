@@ -7,6 +7,10 @@ dnjplatbuild02
 [SecondaryNameNode]
 dnjplatbuild04
 
+[Masters]
+dnjplatbuild02
+dnjplatbuild04
+
 [Slaves]
 dnjplatbuild06
 dnjplatbuild08

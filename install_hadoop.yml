@@ -1,6 +1,6 @@
 #- script: /some/local/script.sh --some-arguments 1234
 - hosts: All #Sample
-  remote_user: ubuntu
+  remote_user: build
   become: True
   become_method: sudo
   become_user: root
@@ -16,7 +16,7 @@
         owner={{ item }}
         mode=0644
       with_items:
-        - ubuntu
+        - build
     - name: Add PATH into bashrc
       lineinfile:
         dest="/home/{{ item }}/.bashrc"
@@ -25,4 +25,12 @@
         owner={{ item }}
         mode=0644
       with_items:
-        - ubuntu
+        - build
+    - name: Copy config files
+      copy: src=etc/hadoop/{{ item }} dest=/usr/local/hadoop/etc/hadoop/{{ item }}
+      with_items:
+        - core-site.xml
+        - hadoop-env.sh 
+        - hdfs-site.xml
+        - yarn-env.sh
+        - yarn-site.xml
