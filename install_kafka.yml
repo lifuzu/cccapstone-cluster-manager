@@ -1,17 +1,16 @@
-#- script: /some/local/script.sh --some-arguments 1234
-- hosts: Sample
+- hosts: All #Sample
   remote_user: ubuntu
   become: True
   become_method: sudo
   become_user: root
   gather_facts: force
   tasks:
-    - name: Install JAVA
-      script: util/java.sh
-    - name: Add JAVA HOME into bashrc
+    - name: Install Kafka
+      script: util/kafka.sh
+    - name: Add Kafka HOME into bashrc
       lineinfile:
         dest="/home/{{ item }}/.bashrc"
-        line="export JAVA_HOME=/usr/local/java"
+        line="export KAFKA_HOME=/usr/local/kafka"
         state=present
         owner={{ item }}
         mode=0644
@@ -20,7 +19,7 @@
     - name: Add PATH into bashrc
       lineinfile:
         dest="/home/{{ item }}/.bashrc"
-        line="export PATH=$PATH:$JAVA_HOME/bin"
+        line="export PATH=$PATH:$KAFKA_HOME/bin"
         state=present
         owner={{ item }}
         mode=0644

@@ -1,0 +1,43 @@
+- hosts: All #Sample
+  remote_user: ubuntu
+  become: True
+  become_method: sudo
+  become_user: root
+  gather_facts: force
+  tasks:
+    - name: Install Cassandra
+      script: util/cassandra.sh
+    - name: Add Cassandra HOME into bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        line="export CASSANDRA_HOME=/usr/local/cassandra"
+        state=present
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - ubuntu
+    - name: Add PATH into bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        line="export PATH=$PATH:$CASSANDRA_HOME/bin"
+        state=present
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - ubuntu
+    - name: Replace Cassandra log dir to $HOME/cassandra/logs
+      lineinfile:
+        dest="/usr/local/cassandra/bin/cassandra"
+        state=present
+        regexp='(.*)-Dcassandra.logdir=\$CASSANDRA_HOME\/logs(.*)$'
+        line='\1-Dcassandra.logdir=/home/ubuntu/cassandra/logs\2'
+        backup=yes
+        backrefs=yes
+    - name: Replace Cassandra data dir to $HOME/cassandra/data
+      lineinfile:
+        dest="/usr/local/cassandra/bin/cassandra.in.sh"
+        state=present
+        regexp='^(.*)="\$CASSANDRA_HOME\/data(.*)$'
+        line='\1="/home/ubuntu/cassandra/data\2'
+        backup=yes
+        backrefs=yes
