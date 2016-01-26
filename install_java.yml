@@ -1,13 +1,13 @@
 #- script: /some/local/script.sh --some-arguments 1234
 - hosts: Sample
-  remote_user: ubuntu
+  remote_user: build
   become: True
   become_method: sudo
   become_user: root
   gather_facts: force
   tasks:
-    - name: Install JAVA
-      script: util/java.sh
+    #- name: Install JAVA
+    #  script: util/java.sh
     - name: Add JAVA HOME into bashrc
       lineinfile:
         dest="/home/{{ item }}/.bashrc"
@@ -16,7 +16,7 @@
         owner={{ item }}
         mode=0644
       with_items:
-        - ubuntu
+        - build
     - name: Add PATH into bashrc
       lineinfile:
         dest="/home/{{ item }}/.bashrc"
@@ -25,4 +25,4 @@
         owner={{ item }}
         mode=0644
       with_items:
-        - ubuntu
+        - build

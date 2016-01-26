@@ -1,23 +1,18 @@
 [Sample]
-54.152.12.246
+dnjplatbuild10
 
 [NameNode]
-54.86.48.166
+dnjplatbuild02
 
 [SecondaryNameNode]
-54.165.158.28
+dnjplatbuild04
 
 [Slaves]
-52.90.42.141
-52.90.92.122
+dnjplatbuild06
+dnjplatbuild08
 
 [All]
-54.86.48.166
-54.165.158.28
-52.90.42.141
-52.90.92.122
-
-#ec2-54-86-48-166.compute-1.amazonaws.com
-#ubuntu@ec2-54-165-158-28.compute-1.amazonaws.com
-#ubuntu@ec2-52-90-42-141.compute-1.amazonaws.com
-#ubuntu@ec2-52-90-92-122.compute-1.amazonaws.com
+dnjplatbuild02
+dnjplatbuild04
+dnjplatbuild06
+dnjplatbuild08
