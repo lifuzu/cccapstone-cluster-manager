@@ -26,6 +26,10 @@
  </description>
 </property>
 <property>
+  <name>dfs.namenode.secondary.http-address</name>
+  <value>dnjplatbuild04:50090</value>
+</property>
+<property>
  <name>dfs.namenode.name.dir</name>
  <value>/data/hadoop/namenode</value>
  <description>Determines where on the local filesystem the DFS name node should store the name table(fsimage). If this is a comma-delimited list of directories then the name table is replicated in all of the directories, for redundancy.
