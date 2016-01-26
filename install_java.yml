@@ -1,0 +1,28 @@
+#- script: /some/local/script.sh --some-arguments 1234
+- hosts: All
+  remote_user: ubuntu
+  become: True
+  become_method: sudo
+  become_user: root
+  gather_facts: force
+  tasks:
+    - name: Install JAVA
+      script: util/java.sh
+    - name: Add JAVA HOME into bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        line="export JAVA_HOME=/usr/local/java"
+        state=present
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - ubuntu
+    - name: Add PATH into bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        line="export PATH=$PATH:$JAVA_HOME/bin"
+        state=present
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - ubuntu

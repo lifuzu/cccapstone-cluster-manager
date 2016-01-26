@@ -1,0 +1,28 @@
+#- script: /some/local/script.sh --some-arguments 1234
+- hosts: All #Sample
+  remote_user: ubuntu
+  become: True
+  become_method: sudo
+  become_user: root
+  gather_facts: force
+  tasks:
+    - name: Install Hadoop
+      script: util/hadoop.sh
+    - name: Add Hadoop HOME into bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        line="export HADOOP_HOME=/usr/local/hadoop"
+        state=present
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - ubuntu
+    - name: Add PATH into bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        line="export PATH=$PATH:$HADOOP_HOME/bin"
+        state=present
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - ubuntu
