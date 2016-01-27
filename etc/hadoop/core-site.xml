@@ -28,4 +28,35 @@
   <value>hdfs://dnjplatbuild02:54310</value>
   <description>Use HDFS as file storage engine</description>
 </property>
+
+<property>
+  <name>fs.s3.awsAccessKeyId</name>
+  <value>AKIAIT4BN36YRQZOJSLQ</value>
+</property>
+
+<property>
+  <name>fs.s3.awsSecretAccessKey</name>
+  <value>S5nEFp8rb1nady3ls0QZxUPLlAPRW45r0GLmzWhu</value>
+</property>
+
+<property>
+  <name>fs.s3n.awsAccessKeyId</name>
+  <value>AKIAIT4BN36YRQZOJSLQ</value>
+</property>
+
+<property>
+  <name>fs.s3n.awsSecretAccessKey</name>
+  <value>S5nEFp8rb1nady3ls0QZxUPLlAPRW45r0GLmzWhu</value>
+</property>
+
+<property>
+  <name>fs.s3.impl</name>
+  <value>org.apache.hadoop.fs.s3.S3FileSystem</value>
+</property>
+
+<property>
+  <name>fs.s3n.impl</name>
+  <value>org.apache.hadoop.fs.s3native.NativeS3FileSystem</value>
+</property>
+
 </configuration>

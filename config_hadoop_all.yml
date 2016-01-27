@@ -1,0 +1,13 @@
+#- script: /some/local/script.sh --some-arguments 1234
+- hosts: All #Sample
+  remote_user: build
+  become: True
+  become_method: sudo
+  become_user: root
+  gather_facts: force
+  tasks:
+    - name: Config Hadoop master
+      copy: src=etc/hadoop/{{ item }} dest=/usr/local/hadoop/etc/hadoop/{{ item }}
+      with_items:
+        - hadoop-env.sh
+        - core-site.xml
