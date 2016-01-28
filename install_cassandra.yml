@@ -5,8 +5,8 @@
   become_user: root
   gather_facts: force
   tasks:
-    - name: Install Cassandra
-      script: util/cassandra.sh
+    #- name: Install Cassandra
+    #  script: util/cassandra.sh
     - name: Add Cassandra HOME into bashrc
       lineinfile:
         dest="/home/{{ item }}/.bashrc"
@@ -41,3 +41,9 @@
         line='\1="/data/hadoop/cassandra/data\2'
         backup=yes
         backrefs=yes
+    #- name: Copy startup file
+    #  copy: src=etc/init.d/{{ item }} dest=/etc/init.d/{{ item }} mode="a+x"
+    #  with_items:
+    #    - cassandra
+    #- name: Make sure Cassandra is started
+    #  service: name=cassandra state=restarted
