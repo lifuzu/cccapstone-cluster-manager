@@ -1,5 +1,5 @@
-- hosts: All #Sample
-  remote_user: ubuntu
+- hosts: Sample
+  remote_user: build
   become: True
   become_method: sudo
   become_user: root
@@ -15,7 +15,7 @@
         owner={{ item }}
         mode=0644
       with_items:
-        - ubuntu
+        - build
     - name: Add PATH into bashrc
       lineinfile:
         dest="/home/{{ item }}/.bashrc"
@@ -24,13 +24,13 @@
         owner={{ item }}
         mode=0644
       with_items:
-        - ubuntu
+        - build
     - name: Replace Cassandra log dir to $HOME/cassandra/logs
       lineinfile:
         dest="/usr/local/cassandra/bin/cassandra"
         state=present
         regexp='(.*)-Dcassandra.logdir=\$CASSANDRA_HOME\/logs(.*)$'
-        line='\1-Dcassandra.logdir=/home/ubuntu/cassandra/logs\2'
+        line='\1-Dcassandra.logdir=/data/hadoop/cassandra/logs\2'
         backup=yes
         backrefs=yes
     - name: Replace Cassandra data dir to $HOME/cassandra/data
@@ -38,6 +38,6 @@
         dest="/usr/local/cassandra/bin/cassandra.in.sh"
         state=present
         regexp='^(.*)="\$CASSANDRA_HOME\/data(.*)$'
-        line='\1="/home/ubuntu/cassandra/data\2'
+        line='\1="/data/hadoop/cassandra/data\2'
         backup=yes
         backrefs=yes
