@@ -1,12 +1,12 @@
-- hosts: Sample
+- hosts: NameNode
   remote_user: build
   become: True
   become_method: sudo
   become_user: root
   gather_facts: force
   tasks:
-    #- name: Install Cassandra
-    #  script: util/cassandra.sh
+    - name: Install Cassandra
+      script: util/cassandra.sh
     - name: Add Cassandra HOME into bashrc
       lineinfile:
         dest="/home/{{ item }}/.bashrc"
