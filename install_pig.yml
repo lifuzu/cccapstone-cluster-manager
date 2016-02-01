@@ -1,4 +1,4 @@
-- hosts: All #Sample
+- hosts: Sample
   remote_user: build
   become: True
   become_method: sudo

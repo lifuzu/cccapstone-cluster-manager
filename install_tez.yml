@@ -1,0 +1,34 @@
+- hosts: All #Sample
+  remote_user: build
+  become: True
+  become_method: sudo
+  become_user: root
+  gather_facts: force
+  tasks:
+    #- name: Install Tez
+    #  script: util/tez.sh
+    #- name: Upload Tez to Hadoop FS
+    #  become_user: build
+    #  script: util/tez-upload.sh
+    - name: Add Tez HOME into bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        line="export TEZ_HOME=/usr/local/pig"
+        state=present
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - build
+    - name: Add Tez JARS into bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        line="export TEZ_JARS=$PIG_HOME/lib"
+        state=present
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - build
+    - name: Copy config files
+      copy: src=etc/hadoop/{{ item }} dest=/usr/local/hadoop/etc/hadoop/{{ item }}
+      with_items:
+        - tez-site.xml

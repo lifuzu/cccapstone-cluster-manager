@@ -1,0 +1,34 @@
+- hosts: All #Sample
+  remote_user: build
+  become: True
+  become_method: sudo
+  become_user: root
+  gather_facts: force
+  tasks:
+    #- name: Upload Tez to Hadoop FS
+    #  become_user: build
+    #  script: util/tez-upload.sh
+    - name: Remove Tez HOME from bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        regexp="^export TEZ_HOME=.*"
+        state=absent
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - build
+    - name: Remove Tez JARS from bashrc
+      lineinfile:
+        dest="/home/{{ item }}/.bashrc"
+        regexp="^export TEZ_JARS=.*"
+        state=absent
+        owner={{ item }}
+        mode=0644
+      with_items:
+        - build
+    - name: Delete config files
+      file: path=/usr/local/hadoop/etc/hadoop/{{ item }} state=absent
+      with_items:
+        - tez-site.xml
+    - name: Uninstall Tez
+      script: util/tez-remove.sh
